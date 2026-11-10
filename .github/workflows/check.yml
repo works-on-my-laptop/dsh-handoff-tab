@@ -1,0 +1,23 @@
+name: check
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  syntax-and-client-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Syntax check (host + client)
+        run: |
+          node --check index.js
+          node --check client.js
+      - name: Validate JSON resources
+        run: |
+          node -e "for (const f of ['package.json','locale/zh.json','locale/en.json']) JSON.parse(require('fs').readFileSync(f,'utf8'))"
+      - name: Client registration smoke test
+        run: node test/client-smoke.cjs

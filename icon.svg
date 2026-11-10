@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Handoff">
+  <rect x="4" y="4" width="56" height="56" rx="14" fill="#247bbf"/>
+  <path d="M20 26h16.5l-4.2-4.2 3.4-3.4 10 10-10 10-3.4-3.4 4.2-4.2H20z" fill="#fff"/>
+  <rect x="20" y="38" width="24" height="4" rx="2" fill="#ffffff" opacity="0.85"/>
+  <rect x="20" y="44" width="16" height="4" rx="2" fill="#ffffff" opacity="0.55"/>
+</svg>

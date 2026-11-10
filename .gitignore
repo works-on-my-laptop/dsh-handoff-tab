@@ -1,0 +1,14 @@
+# Dependencies (the plugin itself ships without any; keep a local install out of git)
+node_modules/
+
+# Logs and editor/OS noise
+*.log
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.local
+
+# Scratch artifacts from local verification
+.m0-doc*.json
+*.tmp
