@@ -78,32 +78,32 @@ window.__ModuleLoader__.load({
       // the rule reactive — switching away unmounts the view, restoring the
       // composer. The view is read-only, so losing the input box is intended.
       '[data-conversation-session]:has([data-dsh-handoff-view]) [data-composer-seat]{display:none!important}',
-      '.dsh-handoff-root{display:flex;flex-direction:column;flex:1 1 0;min-height:0;overflow:hidden;color:var(--dsw-alias-label-primary);font-family:var(--dsw-font-family,system-ui,-apple-system,"Segoe UI",sans-serif);box-sizing:border-box}',
-      '.dsh-handoff-root *,.dsh-handoff-root *::before,.dsh-handoff-root *::after{box-sizing:border-box}',
-      '.dsh-handoff-center{flex:1 1 0;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:32px 24px;text-align:center}',
-      '.dsh-handoff-title{font-size:15px;font-weight:600;line-height:1.45;color:var(--dsw-alias-label-primary)}',
-      '.dsh-handoff-desc{font-size:13px;line-height:1.7;color:var(--dsw-alias-label-secondary);max-width:520px;margin:0}',
-      '.dsh-handoff-note{font-size:13px;line-height:1.6;color:var(--dsw-alias-label-secondary);display:flex;align-items:center;gap:8px}',
-      '.dsh-handoff-pulse{width:8px;height:8px;border-radius:50%;background:var(--dsw-alias-brand-primary,#247bbf);animation:dsh-handoff-pulse 1.2s ease-in-out infinite}',
-      '@keyframes dsh-handoff-pulse{0%,100%{opacity:.25;transform:scale(.85)}50%{opacity:1;transform:scale(1)}}',
-      '.dsh-handoff-error{font-size:13px;line-height:1.7;color:var(--dsw-alias-state-error-primary);max-width:560px;word-break:break-word}',
+      '.dsh-handoff-tab-root{display:flex;flex-direction:column;flex:1 1 0;min-height:0;overflow:hidden;color:var(--dsw-alias-label-primary);font-family:var(--dsw-font-family,system-ui,-apple-system,"Segoe UI",sans-serif);box-sizing:border-box}',
+      '.dsh-handoff-tab-root *,.dsh-handoff-tab-root *::before,.dsh-handoff-tab-root *::after{box-sizing:border-box}',
+      '.dsh-handoff-tab-center{flex:1 1 0;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:32px 24px;text-align:center}',
+      '.dsh-handoff-tab-title{font-size:15px;font-weight:600;line-height:1.45;color:var(--dsw-alias-label-primary)}',
+      '.dsh-handoff-tab-desc{font-size:13px;line-height:1.7;color:var(--dsw-alias-label-secondary);max-width:520px;margin:0}',
+      '.dsh-handoff-tab-note{font-size:13px;line-height:1.6;color:var(--dsw-alias-label-secondary);display:flex;align-items:center;gap:8px}',
+      '.dsh-handoff-tab-pulse{width:8px;height:8px;border-radius:50%;background:var(--dsw-alias-brand-primary,#247bbf);animation:dsh-handoff-tab-pulse 1.2s ease-in-out infinite}',
+      '@keyframes dsh-handoff-tab-pulse{0%,100%{opacity:.25;transform:scale(.85)}50%{opacity:1;transform:scale(1)}}',
+      '.dsh-handoff-tab-error{font-size:13px;line-height:1.7;color:var(--dsw-alias-state-error-primary);max-width:560px;word-break:break-word}',
       // Buttons own their full hover surface: an explicit border keeps the
       // hover/focus background visually bounded to the whole padded box.
-      '.dsh-handoff-btn{display:inline-flex;align-items:center;justify-content:center;height:28px;padding:0 12px;margin:0;border:1px solid transparent;border-radius:calc(var(--dsw-radius-md, 8px) - 1px);background:transparent;color:var(--dsw-alias-label-secondary);font-family:inherit;font-size:12.5px;line-height:1;cursor:pointer;white-space:nowrap;transition:background-color .12s ease,color .12s ease,border-color .12s ease,box-shadow .12s ease}',
-      '.dsh-handoff-btn:hover{background:var(--dsw-alias-interactive-bg-hover,rgba(128,128,128,.12));border-color:var(--dsw-alias-border-l1);color:var(--dsw-alias-label-primary)}',
-      '.dsh-handoff-btn:active{background:var(--dsw-alias-interactive-bg-active,rgba(128,128,128,.18))}',
-      '.dsh-handoff-btn:focus-visible{outline:2px solid var(--dsw-alias-brand-primary,#247bbf);outline-offset:2px}',
-      '.dsh-handoff-btn:disabled{opacity:.55;cursor:default;background:transparent;border-color:transparent;color:var(--dsw-alias-label-tertiary)}',
-      '.dsh-handoff-btn[data-copied="true"]{color:var(--dsw-alias-state-success-primary,#3fb950)}',
-      '.dsh-handoff-btn[data-copied="failed"]{color:var(--dsw-alias-state-error-primary,#f85149)}',
-      '.dsh-handoff-btn-primary{height:32px;padding:0 18px;font-size:13px;background:var(--dsw-alias-brand-primary,#247bbf);border-color:var(--dsw-alias-brand-primary,#247bbf);color:#fff;box-shadow:0 1px 2px rgba(0,0,0,.12)}',
-      '.dsh-handoff-btn-primary:hover{background:var(--dsw-alias-brand-primary,#247bbf);border-color:var(--dsw-alias-brand-primary,#247bbf);color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.18)}',
-      '.dsh-handoff-btn-primary:active{background:var(--dsw-alias-brand-primary,#247bbf);opacity:.92;box-shadow:0 1px 2px rgba(0,0,0,.12)}',
-      '.dsh-handoff-toolbar{flex:none;display:flex;align-items:center;gap:8px;min-height:44px;padding:6px 16px;border-bottom:1px solid var(--dsw-alias-border-l1)}',
-      '.dsh-handoff-time{flex:1 1 auto;min-width:0;font-size:12px;line-height:1.4;color:var(--dsw-alias-label-tertiary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}',
-      '.dsh-handoff-actions{flex:none;display:flex;align-items:center;gap:10px}',
-      '.dsh-handoff-body{flex:1 1 0;min-height:0;overflow:auto;padding:16px 20px 28px}',
-      '.dsh-handoff-pre{max-width:920px;margin:0 auto;white-space:pre-wrap;word-break:break-word;font-family:var(--dsw-font-markdown-code-font-family,ui-monospace,SFMono-Regular,Menlo,Consolas,monospace);font-size:13px;line-height:1.7;color:var(--dsw-alias-label-primary)}',
+      '.dsh-handoff-tab-btn{display:inline-flex;align-items:center;justify-content:center;width:auto;height:28px;padding:0 12px;margin:0;border:1px solid transparent;border-radius:calc(var(--dsw-radius-md, 8px) - 1px);background:transparent;color:var(--dsw-alias-label-secondary);font-family:inherit;font-size:12.5px;line-height:1;cursor:pointer;white-space:nowrap;transition:background-color .12s ease,color .12s ease,border-color .12s ease,box-shadow .12s ease}',
+      '.dsh-handoff-tab-btn:hover{background:var(--dsw-alias-interactive-bg-hover,rgba(128,128,128,.12));border-color:var(--dsw-alias-border-l1);color:var(--dsw-alias-label-primary)}',
+      '.dsh-handoff-tab-btn:active{background:var(--dsw-alias-interactive-bg-active,rgba(128,128,128,.18))}',
+      '.dsh-handoff-tab-btn:focus-visible{outline:2px solid var(--dsw-alias-brand-primary,#247bbf);outline-offset:2px}',
+      '.dsh-handoff-tab-btn:disabled{opacity:.55;cursor:default;background:transparent;border-color:transparent;color:var(--dsw-alias-label-tertiary)}',
+      '.dsh-handoff-tab-btn[data-copied="true"]{color:var(--dsw-alias-state-success-primary,#3fb950)}',
+      '.dsh-handoff-tab-btn[data-copied="failed"]{color:var(--dsw-alias-state-error-primary,#f85149)}',
+      '.dsh-handoff-tab-btn-primary{height:32px;padding:0 18px;font-size:13px;background:var(--dsw-alias-brand-primary,#247bbf);border-color:var(--dsw-alias-brand-primary,#247bbf);color:#fff;box-shadow:0 1px 2px rgba(0,0,0,.12)}',
+      '.dsh-handoff-tab-btn-primary:hover{background:var(--dsw-alias-brand-primary,#247bbf);border-color:var(--dsw-alias-brand-primary,#247bbf);color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.18)}',
+      '.dsh-handoff-tab-btn-primary:active{background:var(--dsw-alias-brand-primary,#247bbf);opacity:.92;box-shadow:0 1px 2px rgba(0,0,0,.12)}',
+      '.dsh-handoff-tab-toolbar{flex:none;display:flex;align-items:center;gap:8px;min-height:44px;padding:6px 16px;border-bottom:1px solid var(--dsw-alias-border-l1)}',
+      '.dsh-handoff-tab-time{flex:1 1 auto;min-width:0;font-size:12px;line-height:1.4;color:var(--dsw-alias-label-tertiary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}',
+      '.dsh-handoff-tab-actions{flex:none;display:flex;align-items:center;gap:10px}',
+      '.dsh-handoff-tab-body{flex:1 1 0;min-height:0;overflow:auto;padding:16px 20px 28px}',
+      '.dsh-handoff-tab-pre{max-width:920px;margin:0 auto;white-space:pre-wrap;word-break:break-word;font-family:var(--dsw-font-markdown-code-font-family,ui-monospace,SFMono-Regular,Menlo,Consolas,monospace);font-size:13px;line-height:1.7;color:var(--dsw-alias-label-primary)}',
     ].join('');
 
     function injectStyle() {
@@ -289,36 +289,36 @@ window.__ModuleLoader__.load({
         };
 
         const rootProps = {
-          className: 'dsh-handoff-root',
+          className: 'dsh-handoff-tab-root',
           'data-dsh-handoff-view': '',
           'data-conversation-composer-overlay': '',
         };
 
         if (status === 'loading') {
-          return h('div', rootProps, h('div', { className: 'dsh-handoff-center' },
-            h('div', { className: 'dsh-handoff-note' }, t('loading')),
+          return h('div', rootProps, h('div', { className: 'dsh-handoff-tab-center' },
+            h('div', { className: 'dsh-handoff-tab-note' }, t('loading')),
           ));
         }
 
         if (status === 'idle') {
-          return h('div', rootProps, h('div', { className: 'dsh-handoff-center' },
-            h('div', { className: 'dsh-handoff-title' }, t('empty.title')),
-            h('div', { className: 'dsh-handoff-desc' }, t('empty.desc')),
-            h('button', { type: 'button', className: 'dsh-handoff-btn dsh-handoff-btn-primary', onClick: () => void generate() }, t('empty.action')),
+          return h('div', rootProps, h('div', { className: 'dsh-handoff-tab-center' },
+            h('div', { className: 'dsh-handoff-tab-title' }, t('empty.title')),
+            h('div', { className: 'dsh-handoff-tab-desc' }, t('empty.desc')),
+            h('button', { type: 'button', className: 'dsh-handoff-tab-btn dsh-handoff-tab-btn-primary', onClick: () => void generate() }, t('empty.action')),
           ));
         }
 
         if (status === 'generating') {
-          return h('div', rootProps, h('div', { className: 'dsh-handoff-center' },
-            h('div', { className: 'dsh-handoff-note' }, h('span', { className: 'dsh-handoff-pulse', 'aria-hidden': true }), t('generating')),
+          return h('div', rootProps, h('div', { className: 'dsh-handoff-tab-center' },
+            h('div', { className: 'dsh-handoff-tab-note' }, h('span', { className: 'dsh-handoff-tab-pulse', 'aria-hidden': true }), t('generating')),
           ));
         }
 
         if (status === 'error') {
-          return h('div', rootProps, h('div', { className: 'dsh-handoff-center' },
-            h('div', { className: 'dsh-handoff-title' }, t('error.title')),
-            h('div', { className: 'dsh-handoff-error' }, error || t('error.unknown')),
-            h('button', { type: 'button', className: 'dsh-handoff-btn dsh-handoff-btn-primary', onClick: retry }, t('error.retry')),
+          return h('div', rootProps, h('div', { className: 'dsh-handoff-tab-center' },
+            h('div', { className: 'dsh-handoff-tab-title' }, t('error.title')),
+            h('div', { className: 'dsh-handoff-tab-error' }, error || t('error.unknown')),
+            h('button', { type: 'button', className: 'dsh-handoff-tab-btn dsh-handoff-tab-btn-primary', onClick: retry }, t('error.retry')),
           ));
         }
 
@@ -332,16 +332,16 @@ window.__ModuleLoader__.load({
         const copyStateAttr = copyState === 'done' ? 'true' : copyState === 'failed' ? 'failed' : 'false';
 
         return h('div', rootProps,
-          h('div', { className: 'dsh-handoff-toolbar' },
-            h('div', { className: 'dsh-handoff-time', title: generatedAt ? new Date(generatedAt).toLocaleString() : '' },
+          h('div', { className: 'dsh-handoff-tab-toolbar' },
+            h('div', { className: 'dsh-handoff-tab-time', title: generatedAt ? new Date(generatedAt).toLocaleString() : '' },
               t('toolbar.generatedAt') + ' ' + formatTime(generatedAt)),
-            h('div', { className: 'dsh-handoff-actions' },
-              h('button', { type: 'button', className: 'dsh-handoff-btn', onClick: () => void generate() }, t('toolbar.regenerate')),
-              h('button', { type: 'button', className: 'dsh-handoff-btn', 'data-copied': copyStateAttr, onClick: () => void copy() }, copyLabel),
+            h('div', { className: 'dsh-handoff-tab-actions' },
+              h('button', { type: 'button', className: 'dsh-handoff-tab-btn', onClick: () => void generate() }, t('toolbar.regenerate')),
+              h('button', { type: 'button', className: 'dsh-handoff-tab-btn', 'data-copied': copyStateAttr, onClick: () => void copy() }, copyLabel),
             ),
           ),
-          h('div', { className: 'dsh-handoff-body' },
-            h('pre', { className: 'dsh-handoff-pre' }, text),
+          h('div', { className: 'dsh-handoff-tab-body' },
+            h('pre', { className: 'dsh-handoff-tab-pre' }, text),
           ),
         );
       }
