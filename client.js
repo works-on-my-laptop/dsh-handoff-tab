@@ -101,7 +101,7 @@ window.__ModuleLoader__.load({
       '.dsh-handoff-btn-primary:active{background:var(--dsw-alias-brand-primary,#247bbf);opacity:.92;box-shadow:0 1px 2px rgba(0,0,0,.12)}',
       '.dsh-handoff-toolbar{flex:none;display:flex;align-items:center;gap:8px;min-height:44px;padding:6px 16px;border-bottom:1px solid var(--dsw-alias-border-l1)}',
       '.dsh-handoff-time{flex:1 1 auto;min-width:0;font-size:12px;line-height:1.4;color:var(--dsw-alias-label-tertiary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}',
-      '.dsh-handoff-actions{flex:none;display:flex;align-items:center;gap:6px}',
+      '.dsh-handoff-actions{flex:none;display:flex;align-items:center;gap:10px}',
       '.dsh-handoff-body{flex:1 1 0;min-height:0;overflow:auto;padding:16px 20px 28px}',
       '.dsh-handoff-pre{max-width:920px;margin:0 auto;white-space:pre-wrap;word-break:break-word;font-family:var(--dsw-font-markdown-code-font-family,ui-monospace,SFMono-Regular,Menlo,Consolas,monospace);font-size:13px;line-height:1.7;color:var(--dsw-alias-label-primary)}',
     ].join('');
