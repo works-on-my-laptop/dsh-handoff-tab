@@ -126,7 +126,7 @@ rm "$DSH_HOME/storages/dsh_handoff_tab.json"
 ## 开发
 
 ```bash
-npm test        # 客户端注册冒烟 + 提示词与代码同步校验
+npm test        # 客户端注册冒烟 + 提示词同步 + 包元信息（图标/截图）校验
 node --check index.js && node --check client.js
 ```
 
@@ -158,6 +158,7 @@ node --check index.js && node --check client.js
 | [`docs/publishing.md`](docs/publishing.md) | 社区市场上架清单、npm 发布、截图、注册表条目与 PR 流程 |
 | [`test/client-smoke.cjs`](test/client-smoke.cjs) | 客户端插件注册结构冒烟测试（零依赖） |
 | [`test/prompt-sync.cjs`](test/prompt-sync.cjs) | 校验 `docs/handoff-prompt.md` 与 `index.js` 的 `SYSTEM_PROMPT` 保持同步 |
+| [`test/package-meta.cjs`](test/package-meta.cjs) | 校验图标声明（`icon` / `./icon`）、图标文件与 `screenshots.json` 路径都存在 |
 | [`.github/workflows/check.yml`](.github/workflows/check.yml) | CI：push/PR 时跑语法检查、JSON 校验与 `npm test` |
 
 ## 验证记录（DSH 0.2.2-rc.1）

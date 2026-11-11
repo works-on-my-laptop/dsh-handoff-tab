@@ -15,12 +15,18 @@
 - 修改任一处时必须同步另一处，并把 `index.js` 的 `PROMPT_VERSION` 加 1（已存文档用它标记提示词版本）。
 - `npm test` 里的 `test/prompt-sync.cjs` 会校验一致性；CI 也会跑。
 
+## 2.1 显示资源
+
+- 对外图标只有 `assets/icon-256.png` 一个文件：`package.json` 的 `icon`、`./icon` export、市场条目 `icon:` 与 README 索引必须都指向它。
+- 图标由 `assets/icon.svg` 导出；改图后重新导出 PNG，并跑 `npm test` 的 `test/package-meta.cjs` 校验路径与文件存在。
+- 截图清单 `screenshots.json` 只能列仓库内真实存在的图片（1–8 张）。
+
 ## 3. 提交前验证
 
 ```bash
 node --check index.js
 node --check client.js
-npm test          # 客户端注册冒烟 + 提示词同步校验
+npm test          # 客户端注册冒烟 + 提示词同步 + 包元信息（图标/截图）校验
 ```
 
 - 改了 `client.js`：在 DSH Web 里强刷，检查空状态、生成中、就绪、复制、深/浅主题。

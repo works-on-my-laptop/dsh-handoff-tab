@@ -40,7 +40,7 @@
     "LICENSE"
   ],
   "scripts": {
-    "test": "node test/client-smoke.cjs && node test/prompt-sync.cjs"
+    "test": "node test/client-smoke.cjs && node test/prompt-sync.cjs && node test/package-meta.cjs"
   },
   "dsh": {
     "bundle": {
