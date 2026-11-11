@@ -1,6 +1,6 @@
 # dsh-handoff-tab
 
-DeepSeek Harness（DSH）Web 会话视图的「交接」tab：在后台读当前会话日志、调用当前默认模型，生成**一段可直接粘贴到新会话第一条消息的交接提示词**，保存在 DSH 存储域（`$DSH_HOME/storages/handoff.json`）。
+DeepSeek Harness（DSH）Web 会话视图的「交接」tab：在后台读当前会话日志、调用当前默认模型，生成**一段可直接粘贴到新会话第一条消息的交接提示词**，保存在 DSH 存储域（`$DSH_HOME/storages/dsh_handoff_tab.json`）。
 
 > English: a **Handoff** tab for the DSH conversation view. It generates a paste-ready handoff prompt for a fresh session, in the background, and stores it in the DSH storage domain — no workspace files, no session messages.
 
@@ -72,19 +72,21 @@ dsh --profile web --dump-config | grep -A1 handoff
 
 ## 数据与隐私
 
-- 只写入 `$DSH_HOME/storages/handoff.json`，结构：
+- 只写入 `$DSH_HOME/storages/dsh_handoff_tab.json`，结构：
 
 ```json
 {
-  "unit": { "name": "handoff", "version": 1 },
+  "unit": { "name": "dsh_handoff_tab", "version": 1 },
   "global": null,
   "tables": {
     "documents": {
-      "<sessionId>": { "text": "…", "generatedAt": 1730000000000, "model": "…", "promptVersion": 1 }
+      "<sessionId>": { "text": "…", "generatedAt": 1730000000000, "model": "…", "promptVersion": 2 }
     }
   }
 }
 ```
+
+存储域名 `dsh_handoff_tab` 由插件名派生（`UNIT_NAME_RE` 只允许小写字母、数字与下划线，不能带连字符），避免与其他插件的 `handoff` 域抢同一个文件。
 
 - **不**写工作区文件，**不**往会话日志追加消息、命令卡片或事件（路由是纯客户端↔宿主 side channel）。
 - 生成会调用当前默认模型并产生 token 费用；若装了 `dsh-cost-meter`，该次费用会计入目标会话（它自己的账本，不写会话事件）。
@@ -101,7 +103,7 @@ dsh plugin --profile web remove dsh-handoff-tab
 命令行卸载后还需把 profile `package.json` 的 `dsh.profile.bundles` 里的 `dsh-handoff-tab` 条目删掉（插件管理页会自动处理）。清空数据（可选）：
 
 ```bash
-rm "$DSH_HOME/storages/handoff.json"
+rm "$DSH_HOME/storages/dsh_handoff_tab.json"
 ```
 
 ## 兼容性与已知限制

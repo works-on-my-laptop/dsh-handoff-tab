@@ -39,7 +39,14 @@ export const inject = ['webServer', 'storageDomain']
 const ROUTE_DOC = '/handoff/doc'
 const ROUTE_GENERATE = '/handoff/generate'
 
-const DOMAIN_NAME = 'handoff'
+/**
+ * Storage-domain name. It doubles as the storage backend unit name, so the
+ * file is `$DSH_HOME/storages/<DOMAIN_NAME>.json`; underscores only because
+ * `UNIT_NAME_RE` is `^[a-z][a-z0-9_]*$` (hyphens are not allowed). Naming it
+ * after the plugin keeps it from colliding with another plugin's "handoff"
+ * domain.
+ */
+const DOMAIN_NAME = 'dsh_handoff_tab'
 const TABLE_NAME = 'documents'
 const DOMAIN_VERSION = 1
 const PROMPT_VERSION = 2
@@ -486,6 +493,7 @@ function buildUserText({ title, cwd, transcript, refs, skills, snapshot }) {
   const lines = []
   lines.push('Session title: ' + (title || 'untitled'))
   lines.push('Workspace: ' + (cwd || '(unknown)'))
+  lines.push('Plugin storage file: $DSH_HOME/storages/' + DOMAIN_NAME + '.json')
   lines.push('')
   lines.push('Files the session touched according to the transcript (may be stale — the current snapshot below wins):')
   if (refs && refs.length) for (const ref of refs) lines.push('- ' + ref)
@@ -503,6 +511,7 @@ function buildUserText({ title, cwd, transcript, refs, skills, snapshot }) {
   lines.push('')
   lines.push('Snapshot rules:')
   lines.push('- The transcript may describe earlier states: files may have moved or been deleted, and planned build artifacts may never have existed. When they conflict, follow this snapshot.')
+  lines.push('- The plugin storage file path stated above is current; ignore any older storage path mentioned in the transcript.')
   lines.push('- Never claim a file, directory or build artifact exists unless it is listed in the snapshot. If something is absent here but mentioned above, write it as an action ("先核实…") instead of a fact.')
   lines.push('')
   lines.push('Hard output constraints:')

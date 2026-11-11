@@ -29,8 +29,8 @@ npm test          # 客户端注册冒烟 + 提示词同步校验
 
 ## 4. 运行期硬约束
 
-- 插件运行期**不写工作区文件**、**不往会话追加消息/命令卡片/事件**；数据只进 `ctx.storageDomain`（`$DSH_HOME/storages/handoff.json`）。
-- 固定标识不可改：patch 行 id `handoff`、存储域 `handoff`、表 `documents`、tab id `handoff`、路由 `GET /handoff/doc` 与 `POST /handoff/generate`。
+- 插件运行期**不写工作区文件**、**不往会话追加消息/命令卡片/事件**；数据只进 `ctx.storageDomain`（`$DSH_HOME/storages/dsh_handoff_tab.json`）。
+- 固定标识不可改：patch 行 id `handoff`、存储域 `dsh_handoff_tab`、表 `documents`、tab id `handoff`、路由 `GET /handoff/doc` 与 `POST /handoff/generate`。
 - 入口只有 tab：不加斜杠命令、dock 按钮、自动切 tab、历史版本或第二个操作按钮。
 - 保持零运行时依赖、无构建步骤；官方 `@deepseek-ai/*` 包用 `peerDependencies`，范围必须带显式预发布分支（参考 `package.json` 现有写法）。
 - 安装、重启、npm 发布、修改仓库设置等有副作用的操作，先征得用户同意。

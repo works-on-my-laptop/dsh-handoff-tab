@@ -105,7 +105,7 @@
 数据模型：
 
 ```
-domain: handoff （version 1）
+domain: dsh_handoff_tab （version 1；存储域以插件名命名，避免与其他插件的 handoff 域冲突；UNIT_NAME_RE 不允许连字符）
 table:  documents
 key:    sessionId
 value:  { text, generatedAt, model, promptVersion }
