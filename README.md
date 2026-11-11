@@ -148,7 +148,7 @@ node --check index.js && node --check client.js
 | [`cordis.patch.yml`](cordis.patch.yml) | bundle patch：插入 Host 行 `id: dsh-handoff-tab` |
 | [`index.js`](index.js) | 宿主半部：两条路由、storageDomain、会话读取与转录压缩、LLM 调用、工作区快照、60 天清理 |
 | [`client.js`](client.js) | 浏览器半部：`conversation.view` 交接 tab、状态机、轮询、复制、主题样式、本 tab 激活时隐藏输入框 |
-| [`assets/icon-256.png`](assets/icon-256.png) | 唯一对外图标：插件管理页与社区市场卡片（GitHub 托管的位图） |
+| [`assets/icon-256.png`](assets/icon-256.png) | 唯一对外图标：插件管理页（`package.json` 的 `icon` 字段）与社区市场卡片（GitHub 托管的位图） |
 | [`assets/icon.svg`](assets/icon.svg) | 图标矢量源文件（不直接对外；改图后重新导出 `icon-256.png`） |
 | [`screenshots.json`](screenshots.json) | 社区市场截图清单（1–8 张，路径相对于本文件） |
 | [`screenshots/1.png`](screenshots/1.png) / [`2.png`](screenshots/2.png) / [`3.png`](screenshots/3.png) | 界面截图：未生成 / 生成中 / 已就绪 |

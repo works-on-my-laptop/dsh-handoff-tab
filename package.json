@@ -6,6 +6,7 @@
   "main": "index.js",
   "license": "MIT",
   "author": "works-on-my-laptop",
+  "icon": "assets/icon-256.png",
   "keywords": [
     "deepseek",
     "deepseek-harness",
