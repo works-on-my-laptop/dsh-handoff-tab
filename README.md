@@ -123,7 +123,7 @@ node --check index.js && node --check client.js
 
 - 本地目录安装是 linked 方式：改 `client.js` 由 client-hmr 热替换；改 `index.js` 需要在插件管理里关/开该插件或重启。
 - 宿主接口：`GET /handoff/doc?sessionId=<id>` 返回 `{state, text?, generatedAt?, model?, error?}`；`POST /handoff/generate` body `{sessionId}` 立即 202 并在后台生成。
-- 设计细节见 [`docs/plugin-design.md`](docs/plugin-design.md)，提示词契约见 [`docs/handoff-prompt.md`](docs/handoff-prompt.md)。
+- 设计细节见 [`docs/plugin-design.md`](docs/plugin-design.md)，提示词契约见 [`docs/handoff-prompt.md`](docs/handoff-prompt.md)，社区市场发布流程见 [`docs/publishing.md`](docs/publishing.md)。
 
 ## 验证记录（DSH 0.2.2-rc.1）
 

@@ -12,3 +12,4 @@ Thumbs.db
 # Scratch artifacts from local verification
 .m0-doc*.json
 *.tmp
+*.tgz
