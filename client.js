@@ -90,15 +90,17 @@ window.__ModuleLoader__.load({
       // Buttons own their full hover surface: an explicit border keeps the
       // hover/focus background visually bounded to the whole padded box.
       '.dsh-handoff-tab-btn{display:inline-flex;align-items:center;justify-content:center;width:auto;height:28px;padding:0 12px;margin:0;border:1px solid transparent;border-radius:calc(var(--dsw-radius-md, 8px) - 1px);background:transparent;color:var(--dsw-alias-label-secondary);font-family:inherit;font-size:12.5px;line-height:1;cursor:pointer;white-space:nowrap;transition:background-color .12s ease,color .12s ease,border-color .12s ease,box-shadow .12s ease}',
-      '.dsh-handoff-tab-btn:hover{background:var(--dsw-alias-interactive-bg-hover,rgba(128,128,128,.12));border-color:var(--dsw-alias-border-l1);color:var(--dsw-alias-label-primary)}',
-      '.dsh-handoff-tab-btn:active{background:var(--dsw-alias-interactive-bg-active,rgba(128,128,128,.18))}',
+      '.dsh-handoff-tab-btn:hover{background:var(--dsw-alias-button-ghost-active-fill,rgba(128,128,128,.12));color:var(--dsw-alias-label-primary);box-shadow:inset 0 0 0 1px var(--dsw-alias-button-ghost-active-border,rgba(128,128,128,.2))}',
+      '.dsh-handoff-tab-btn:active{background:var(--dsw-alias-button-ghost-active-hover,rgba(128,128,128,.18))}',
       '.dsh-handoff-tab-btn:focus-visible{outline:2px solid var(--dsw-alias-brand-primary,#247bbf);outline-offset:2px}',
-      '.dsh-handoff-tab-btn:disabled{opacity:.55;cursor:default;background:transparent;border-color:transparent;color:var(--dsw-alias-label-tertiary)}',
+      '.dsh-handoff-tab-btn:disabled{opacity:.55;cursor:default;background:transparent;box-shadow:none;color:var(--dsw-alias-label-tertiary)}',
       '.dsh-handoff-tab-btn[data-copied="true"]{color:var(--dsw-alias-state-success-primary,#3fb950)}',
       '.dsh-handoff-tab-btn[data-copied="failed"]{color:var(--dsw-alias-state-error-primary,#f85149)}',
-      '.dsh-handoff-tab-btn-primary{height:32px;padding:0 18px;font-size:13px;background:var(--dsw-alias-brand-primary,#247bbf);border-color:var(--dsw-alias-brand-primary,#247bbf);color:#fff;box-shadow:0 1px 2px rgba(0,0,0,.12)}',
-      '.dsh-handoff-tab-btn-primary:hover{background:var(--dsw-alias-brand-primary,#247bbf);border-color:var(--dsw-alias-brand-primary,#247bbf);color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.18)}',
-      '.dsh-handoff-tab-btn-primary:active{background:var(--dsw-alias-brand-primary,#247bbf);opacity:.92;box-shadow:0 1px 2px rgba(0,0,0,.12)}',
+      // Host primary-button pairing: neutral brand fill + its foreground token.
+      // Never hardcode #fff here — in the dark theme the brand fill is near-white.
+      '.dsh-handoff-tab-btn-primary{height:32px;padding:0 18px;font-size:13px;background:var(--dsw-alias-button-primary-fill,#247bbf);border-color:transparent;color:var(--dsw-alias-label-primary-foreground,#fff)}',
+      '.dsh-handoff-tab-btn-primary:hover{background:var(--dsw-alias-button-primary-hover,#1f6aa8);border-color:transparent;color:var(--dsw-alias-label-primary-foreground,#fff)}',
+      '.dsh-handoff-tab-btn-primary:active{background:var(--dsw-alias-button-primary-dimmed,#17547f);border-color:transparent;color:var(--dsw-alias-label-primary-foreground,#fff)}',
       '.dsh-handoff-tab-toolbar{flex:none;display:flex;align-items:center;gap:8px;min-height:44px;padding:6px 16px;border-bottom:1px solid var(--dsw-alias-border-l1)}',
       '.dsh-handoff-tab-time{flex:1 1 auto;min-width:0;font-size:12px;line-height:1.4;color:var(--dsw-alias-label-tertiary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}',
       '.dsh-handoff-tab-actions{flex:none;display:flex;align-items:center;gap:10px}',
