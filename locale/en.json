@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "Handoff",
+    "title": "Session handoff",
     "description": "Adds a Handoff tab to the conversation view: generates a paste-ready handoff prompt in the background and stores it in the DSH data directory (no workspace files, no session messages)."
   }
 }
