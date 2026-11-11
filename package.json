@@ -5,6 +5,7 @@
   "type": "module",
   "main": "index.js",
   "license": "MIT",
+  "author": "dsh-handoff-tab contributors",
   "keywords": [
     "deepseek",
     "deepseek-harness",
@@ -13,6 +14,14 @@
     "handoff",
     "cordis"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/works-on-my-laptop/dsh-handoff-tab.git"
+  },
+  "homepage": "https://github.com/works-on-my-laptop/dsh-handoff-tab#readme",
+  "bugs": {
+    "url": "https://github.com/works-on-my-laptop/dsh-handoff-tab/issues"
+  },
   "exports": {
     ".": "./index.js",
     "./client": "./client.js",
@@ -26,8 +35,12 @@
     "cordis.patch.yml",
     "locale/*.json",
     "icon.svg",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
+  "scripts": {
+    "test": "node test/client-smoke.cjs"
+  },
   "dsh": {
     "bundle": {
       "patch": "./cordis.patch.yml"
@@ -44,6 +57,7 @@
     "@deepseek-ai/dsh-storage-domain": ">=0.2.0-rc.1 <0.3.0-0"
   },
   "engines": {
-    "node": ">=22.19"
+    "node": ">=22.19",
+    "dsh": ">=0.2.0-rc.1 <0.3.0-0"
   }
 }

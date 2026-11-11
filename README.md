@@ -1,76 +1,139 @@
 # dsh-handoff-tab
 
-会话视图「交接」tab：宿主在后台读当前会话日志、调用默认模型，生成**一段可直接粘贴到新会话第一条消息的交接提示词**，保存在 DSH 存储域（`$DSH_HOME/storages/handoff.json`）。
+DeepSeek Harness（DSH）Web 会话视图的「交接」tab：在后台读当前会话日志、调用当前默认模型，生成**一段可直接粘贴到新会话第一条消息的交接提示词**，保存在 DSH 存储域（`$DSH_HOME/storages/handoff.json`）。
 
-- 不写工作区文件；不往会话加消息、命令卡片或事件。
-- 每个会话只保留最新一份，重新生成直接覆盖；保留期 60 天，插件启动后异步清理一次。
-- 入口只有 tab；没有斜杠命令、dock 按钮，也不自动切 tab。
+> English: a **Handoff** tab for the DSH conversation view. It generates a paste-ready handoff prompt for a fresh session, in the background, and stores it in the DSH storage domain — no workspace files, no session messages.
 
-## 状态
+不写工作区、不往会话加消息/命令事件；每个会话只保留最新一份，60 天自动清理。
 
-M0–M3 已完成：
+## 功能
 
-- M0 宿主半部：路由、后台生成、storageDomain 往返、60 天清理、零会话足迹。
-- M1 会话 tab：注册、空状态、生成中、展示、生成时间、重新生成、复制、错误态。
-- M2 收尾：清理与持久化验证、错误路径验证、README。
-- M3 界面打磨：tab 激活时隐藏底部输入框；按钮/工具栏/正文排版按宿主 token 重做（显式边框让 hover 底色完整覆盖按钮盒，主按钮带轻阴影）。
+- 「交接」tab 与「对话」「轨迹」并列（order 20），窄屏自动收进「更多会话视图」省略号菜单。
+- 空状态一键「生成交接提示词」；生成在**宿主后台**执行：切 tab、切会话、关页面都不中断，重新进入按宿主状态（`idle` / `generating` / `ready` / `error`）恢复。
+- 就绪后顶部工具行显示生成时间，支持「重新生成」「复制」；正文就是全部复制内容。
+- tab 激活时隐藏底部输入框，正文区域完整可用（切回其他 tab 自动恢复）。
+- 生成失败给出错误文案与重试，不留半成品；重新生成直接覆盖旧值。
+- 界面文本中英双语（跟随 DSH locale），颜色/圆角/字体跟随宿主主题 token。
 
-已验证（2026-11-10，DSH 0.2.2-rc.1 / Windows）：
+## 环境要求
 
-- 真实生成 4 次（19s–66s），产物均为「正文即提示词」：无标题/引言/生成时间/会话 ID；按「中文字符 + 英文词」口径 754–1207 字。
-- 零会话足迹：空闲会话生成前后会话日志行数不变（332 → 332）。
-- 零工作区足迹：生成前后 `git status` 无新增文件。
-- 60 天清理：注入一条 `generatedAt=0` 的测试记录后重载插件，5 秒后被删除，其余记录保留。
-- 持久化：域关闭（插件关）后重新打开，记录从 `handoff.json` 正常恢复。
-- 错误路径：不存在的会话 → POST 202 → GET 一次性返回 `{state:'error', error:'session "…" not found'}`，再查变回 `idle`。
-- 越界/坏请求：错误 HTTP 方法 405、空 body 400、非法 JSON 400。
-
-## 界面行为
-
-- 会话视图 tab 行：`[对话] [轨迹] [交接]`，窄屏自动收进「更多会话视图」。
-- 只有「交接」tab 处于激活状态时，底部输入框被隐藏（`[data-conversation-session]:has([data-dsh-handoff-view]) [data-composer-seat]{display:none}`，只依赖宿主稳定属性，切回其他 tab 自动恢复）。
-- 正文用等宽 `<pre>` 展示，不做 Markdown 渲染；正文即复制内容。
-- 颜色、边框、圆角、字体全部走 `--dsw-alias-*` / `--dsw-radius-*` / `--dsw-font-*` token，跟随宿主明暗主题。
+- DSH **0.2.2-rc.1**（web profile）实测；`engines.dsh` 兼容范围 `>=0.2.0-rc.1 <0.3.0-0`。
+- Node.js >= 22.19。
+- 无构建步骤、无运行时 npm 依赖。
+- 数据/路由只在 loopback 的 DSH Web 进程内使用。
 
 ## 安装
 
-```text
-dsh plugin --profile web add <本目录>
+三种方式任选其一，装完若宿主没有热装载，重启一次 `dsh web` 即可。
+
+### 1. 直接从 GitHub 安装（pnpm git 依赖）
+
+```bash
+dsh plugin --profile web add github:works-on-my-laptop/dsh-handoff-tab
 ```
 
-首次安装后若宿主未热装载，重启一次 `dsh web`。已安装的本地目录是 linked 方式，之后改 `client.js` 由 client-hmr 热替换，改 `index.js` 需要重载插件（可在插件管理里关/开）或重启。
+### 2. 克隆到本地后按目录安装
 
-## 接口
+```bash
+git clone https://github.com/works-on-my-laptop/dsh-handoff-tab.git
+dsh plugin --profile web add /path/to/dsh-handoff-tab
+```
 
-| 方法 | 路径 | 说明 |
-| --- | --- | --- |
-| `GET` | `/handoff/doc?sessionId=<id>` | 返回 `{state:'idle'\|'generating'\|'ready'\|'error', text?, generatedAt?, model?, promptVersion?, error?}` |
-| `POST` | `/handoff/generate` | body `{sessionId}`；立即 202，返回 `{state:'generating'}`，生成在宿主后台继续 |
+### 3. 用 DSH 的 plugin_manager
 
-生成中状态只存在宿主内存：切 tab、切会话、关页面都不中断；重新进入 tab 时用 `GET` 恢复状态。进程重启会丢失 in-flight（设计允许）。
+在 DSH 里让 agent 调 `plugin_manager`，`action: install_bundle`，`target` 指向仓库目录。它会完成包安装与 bundle 选择。
 
-## 数据
+安装后可自查（应看到 `- id: handoff` 行）：
 
-```text
-$DSH_HOME/storages/handoff.json
+```bash
+dsh --profile web --dump-config | grep -A1 handoff
+```
+
+卸载见文末。
+
+## 使用
+
+1. 打开任意会话，切到 tab 行的「交接」。
+2. 空状态点「生成交接提示词」。单次生成约 10–60 秒（模型/上下文长度而异）。
+3. 生成完成后：
+   - 「复制」把正文整段放进剪贴板，粘到新会话第一条消息即可；
+   - 「重新生成」覆盖旧结果并刷新生成时间；
+   - 生成期间切走/关页面不会中断，回来会显示进行中或已完成。
+4. 生成内容要求：正文即提示词，不含标题、引言、生成时间、会话 ID；覆盖任务与验收、当前进度与证据、关键决策与否决方案、产物路径、坑、下一步、硬约束；目标 800–2000 字。
+
+## 数据与隐私
+
+- 只写入 `$DSH_HOME/storages/handoff.json`，结构：
+
+```json
 {
   "unit": { "name": "handoff", "version": 1 },
   "global": null,
-  "tables": { "documents": { "<sessionId>": { "text", "generatedAt", "model", "promptVersion" } } }
+  "tables": {
+    "documents": {
+      "<sessionId>": { "text": "…", "generatedAt": 1730000000000, "model": "…", "promptVersion": 1 }
+    }
+  }
 }
 ```
 
-记录 schema 用 4 字段的极简校验对象（只要求 `parse`/`safeParse`）而不是 zod：本地目录以 linked 方式装入 profile 后解析不到 profile 的 `zod`，而 harness 只代理自己安装的 `@deepseek-ai/*`。这样插件保持零运行时依赖。
+- **不**写工作区文件，**不**往会话日志追加消息、命令卡片或事件（路由是纯客户端↔宿主 side channel）。
+- 生成会调用当前默认模型并产生 token 费用；若装了 `dsh-cost-meter`，该次费用会计入目标会话（它自己的账本，不写会话事件）。
+- 进程重启会丢失进行中的生成任务；已生成的结果保留在存储文件里。
+- 插件路由与 DSH Web 同源、仅监听 loopback，不额外鉴权；不要在不可信网络暴露 DSH Web 端口。
 
-## 排障
+## 卸载
 
-- 记录读不出 / 插件不激活：检查 `$DSH_HOME/storages/handoff.json` 是否为合法 JSON、`unit.name` 是否为 `handoff`。确认不再需要后删掉该文件即可让插件以空域重建。
-- 生成失败：`GET /handoff/doc` 会一次性返回 `{state:'error', error}`（不落半成品）；重新生成即可重试。
-- 路由 404：确认 profile 里有 `handoff` 这一行（`dsh --profile web --dump-config | grep handoff`）且插件行处于启用状态。
+```bash
+# 推荐：用 DSH 插件管理页卸载，或让 agent 调 plugin_manager remove_bundle
+dsh plugin --profile web remove dsh-handoff-tab
+```
+
+命令行卸载后还需把 profile `package.json` 的 `dsh.profile.bundles` 里的 `dsh-handoff-tab` 条目删掉（插件管理页会自动处理）。清空数据（可选）：
+
+```bash
+rm "$DSH_HOME/storages/handoff.json"
+```
+
+## 兼容性与已知限制
+
+- 仅在 DSH 0.2.2-rc.1 / Windows 实测；其他版本未验证，尤其是客户端 slot API。
+- 正文用等宽 `<pre>` 渲染，暂不做 Markdown。
+- 长度由模型自行控制，可能略超出 800–2000 字目标。
+- 记录 schema 使用最小校验对象（只要求 `parse`/`safeParse`）而不是 zod：本地目录以 linked 方式装入 profile 时解析不到 profile 的 `zod`，而 harness 只代理自己安装的 `@deepseek-ai/*`；这样插件保持零依赖。
+- 视图组件只 `require('react')`，不 require 任何 DSH Client 包（官方建议，避免版本漂移与 slot 崩溃）。
 
 ## 开发
 
-- `index.js`：宿主 ESM，`inject = ['webServer','storageDomain']`。
-- `client.js`：浏览器 classic script，`window.__ModuleLoader__.load` + `exports.apply/inject`。
-- `cordis.patch.yml`：插入 patch 行 `handoff`。
-- 验证：`curl -s -X POST http://127.0.0.1:3080/handoff/generate -H 'content-type: application/json' -d '{"sessionId":"<id>"}'`，再轮询 `GET /handoff/doc`；用会话日志行数前后不变确认零会话足迹。
+```text
+package.json        # bundle patch + dsh.client Web 清单
+cordis.patch.yml    # 插入 patch 行 id: handoff
+index.js            # 宿主：GET /handoff/doc、POST /handoff/generate、storageDomain、生成管线、60 天清理
+client.js           # 浏览器：conversation.view tab + 状态机 + 样式
+locale/{zh,en}.json # 插件管理页标题/描述
+icon.svg            # 插件图标
+test/client-smoke.cjs # 客户端注册结构冒烟测试（零依赖）
+docs/               # 设计规格与提示词契约
+```
+
+```bash
+npm test        # 客户端注册冒烟测试（node test/client-smoke.cjs）
+node --check index.js && node --check client.js
+```
+
+- 本地目录安装是 linked 方式：改 `client.js` 由 client-hmr 热替换；改 `index.js` 需要在插件管理里关/开该插件或重启。
+- 宿主接口：`GET /handoff/doc?sessionId=<id>` 返回 `{state, text?, generatedAt?, model?, error?}`；`POST /handoff/generate` body `{sessionId}` 立即 202 并在后台生成。
+- 设计细节见 [`docs/plugin-design.md`](docs/plugin-design.md)，提示词契约见 [`docs/handoff-prompt.md`](docs/handoff-prompt.md)。
+
+## 验证记录（DSH 0.2.2-rc.1）
+
+- 真实生成 4 次，19–66 秒；产物均为「正文即提示词」，无可粘贴外壳。
+- 零会话足迹：空闲会话生成前后日志行数 332 → 332。
+- 零工作区足迹：生成前后 `git status` 无新增文件。
+- 60 天清理：注入 `generatedAt=0` 的测试纪录后重载插件，5 秒后删除，其余保留。
+- 错误路径：不存在的会话 → POST 202 → GET 一次性返回 `{state:'error', …}`，随后回到 `idle`。
+- 越界请求：错误方法 405、空 body/非法 JSON 400。
+
+## License
+
+[MIT](LICENSE) © dsh-handoff-tab contributors
