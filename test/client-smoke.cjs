@@ -101,17 +101,17 @@ const ctx = {
 
 module_.apply(ctx)
 
-assert.deepEqual(dictionaries, [{ namespace: 'handoff', languages: ['zh', 'en'] }])
+assert.deepEqual(dictionaries, [{ namespace: 'dsh-handoff-tab', languages: ['zh', 'en'] }])
 assert.equal(injections.join(','), 'conversation.view')
 assert.equal(registrations.length, 1, 'expected exactly one slot registration')
 
 const { spec, component } = registrations[0]
 assert.equal(spec.name, 'conversation.view')
-assert.equal(spec.id, 'handoff')
+assert.equal(spec.id, 'dsh-handoff-tab')
 assert.equal(spec.order, 20)
-assert.equal(spec.locale, 'handoff')
+assert.equal(spec.locale, 'dsh-handoff-tab')
 assert.equal(typeof spec.label, 'function')
-assert.equal(spec.label(), 'handoff:view.handoff')
+assert.equal(spec.label(), 'dsh-handoff-tab:view.handoff')
 const injected = spec.inject('session-test')
 assert.equal(injected.sessionId, 'session-test', 'sessionId must be forwarded to props')
 assert.equal(typeof component, 'function', 'view component must be a function')

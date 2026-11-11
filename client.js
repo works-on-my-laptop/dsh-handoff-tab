@@ -29,7 +29,7 @@ window.__ModuleLoader__.load({
     const React = require('react');
     const h = React.createElement;
 
-    const NS = 'handoff';
+    const NS = 'dsh-handoff-tab';
     const POLL_INTERVAL_MS = 1500;
     const MAX_WAIT_MS = 5 * 60 * 1000;
 
@@ -77,7 +77,7 @@ window.__ModuleLoader__.load({
       // data-composer-seat) rather than hashed module classes, and :has() makes
       // the rule reactive — switching away unmounts the view, restoring the
       // composer. The view is read-only, so losing the input box is intended.
-      '[data-conversation-session]:has([data-dsh-handoff-view]) [data-composer-seat]{display:none!important}',
+      '[data-conversation-session]:has([data-dsh-handoff-tab-view]) [data-composer-seat]{display:none!important}',
       '.dsh-handoff-tab-root{display:flex;flex-direction:column;flex:1 1 0;min-height:0;overflow:hidden;color:var(--dsw-alias-label-primary);font-family:var(--dsw-font-family,system-ui,-apple-system,"Segoe UI",sans-serif);box-sizing:border-box}',
       '.dsh-handoff-tab-root *,.dsh-handoff-tab-root *::before,.dsh-handoff-tab-root *::after{box-sizing:border-box}',
       '.dsh-handoff-tab-center{flex:1 1 0;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:32px 24px;text-align:center}',
@@ -189,7 +189,7 @@ window.__ModuleLoader__.load({
 
           const read = async () => {
             try {
-              const response = await fetch('/handoff/doc?sessionId=' + encodeURIComponent(sessionId), {
+              const response = await fetch('/dsh-handoff-tab/doc?sessionId=' + encodeURIComponent(sessionId), {
                 credentials: 'same-origin',
                 cache: 'no-store',
                 signal: controller.signal,
@@ -253,7 +253,7 @@ window.__ModuleLoader__.load({
           setCopyState('idle');
           setStatus('generating');
           try {
-            const response = await fetch('/handoff/generate', {
+            const response = await fetch('/dsh-handoff-tab/generate', {
               method: 'POST',
               credentials: 'same-origin',
               headers: { 'content-type': 'application/json' },
@@ -292,7 +292,7 @@ window.__ModuleLoader__.load({
 
         const rootProps = {
           className: 'dsh-handoff-tab-root',
-          'data-dsh-handoff-view': '',
+          'data-dsh-handoff-tab-view': '',
           'data-conversation-composer-overlay': '',
         };
 
@@ -350,7 +350,7 @@ window.__ModuleLoader__.load({
 
       ctx.slots.inject('conversation.view', () => ctx.slots.register({
         name: 'conversation.view',
-        id: 'handoff',
+        id: 'dsh-handoff-tab',
         order: 20,
         locale: NS,
         label: () => t('view.handoff'),

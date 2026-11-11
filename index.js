@@ -4,8 +4,8 @@
  * Serves two same-origin routes for the conversation view tab added by the
  * browser half (`client.js`):
  *
- *   GET  /handoff/doc?sessionId=<id>   → { state: 'idle' | 'generating' | 'ready' | 'error', ... }
- *   POST /handoff/generate  {sessionId} → 202 { state: 'generating' }
+ *   GET  /dsh-handoff-tab/doc?sessionId=<id>   → { state: 'idle' | 'generating' | 'ready' | 'error', ... }
+ *   POST /dsh-handoff-tab/generate  {sessionId} → 202 { state: 'generating' }
  *
  * Generation is a Host background task: POST returns immediately, the
  * transcript is read and summarized by the current default model, and the
@@ -36,8 +36,8 @@ export const inject = ['webServer', 'storageDomain']
  * Constants                                                           *
  * ------------------------------------------------------------------ */
 
-const ROUTE_DOC = '/handoff/doc'
-const ROUTE_GENERATE = '/handoff/generate'
+const ROUTE_DOC = '/dsh-handoff-tab/doc'
+const ROUTE_GENERATE = '/dsh-handoff-tab/generate'
 
 /**
  * Storage-domain name. It doubles as the storage backend unit name, so the
@@ -201,7 +201,7 @@ export function apply(ctx) {
     }
   }, 'dsh-handoff-tab: storage domain and retention')
 
-  // GET /handoff/doc?sessionId=... — the current state for one session.
+  // GET /dsh-handoff-tab/doc?sessionId=... — the current state for one session.
   ctx.effect(() => ctx.webServer.register({
     kind: 'exact',
     path: ROUTE_DOC,
@@ -240,13 +240,13 @@ export function apply(ctx) {
         }
         sendJson(res, 200, { state: 'idle' })
       } catch (error) {
-        console.error(LOG_PREFIX, 'GET /handoff/doc failed:', error)
+        console.error(LOG_PREFIX, 'GET /dsh-handoff-tab/doc failed:', error)
         sendJson(res, 500, { state: 'idle', error: errorMessage(error) })
       }
     },
-  }), 'dsh-handoff-tab: GET /handoff/doc')
+  }), 'dsh-handoff-tab: GET /dsh-handoff-tab/doc')
 
-  // POST /handoff/generate { sessionId } — start a background generation.
+  // POST /dsh-handoff-tab/generate { sessionId } — start a background generation.
   ctx.effect(() => ctx.webServer.register({
     kind: 'exact',
     path: ROUTE_GENERATE,
@@ -280,11 +280,11 @@ export function apply(ctx) {
           })
         sendJson(res, 202, { state: 'generating', startedAt: entry.startedAt })
       } catch (error) {
-        console.error(LOG_PREFIX, 'POST /handoff/generate failed:', error)
+        console.error(LOG_PREFIX, 'POST /dsh-handoff-tab/generate failed:', error)
         sendJson(res, 500, { state: 'error', error: errorMessage(error) })
       }
     },
-  }), 'dsh-handoff-tab: POST /handoff/generate')
+  }), 'dsh-handoff-tab: POST /dsh-handoff-tab/generate')
 }
 
 /* ------------------------------------------------------------------ *

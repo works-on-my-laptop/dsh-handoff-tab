@@ -35,7 +35,7 @@
               正文：交接提示词（可滚动）
         │
         ▼
- 客户端 fetch('/handoff/generate' | '/handoff/doc')
+ 客户端 fetch('/dsh-handoff-tab/generate' | '/dsh-handoff-tab/doc')
         │
         ▼
  宿主 index.js
@@ -130,7 +130,7 @@ value:  { text, generatedAt, model, promptVersion }
 ```
 dsh-handoff-tab/
 ├── package.json      # dsh.bundle.patch + dsh.client{platform:'web', inject:[…]}
-├── cordis.patch.yml  # - insert: { id: handoff, name: dsh-handoff-tab }
+├── cordis.patch.yml  # - insert: { id: dsh-handoff-tab, name: dsh-handoff-tab }
 ├── index.js          # 宿主：routes + storageDomain + sessionQuery + llm
 ├── client.js         # 浏览器：conversation.view tab + 状态机 + 复制
 └── README.md         # 安装/卸载/数据位置/零足迹说明

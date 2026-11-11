@@ -52,7 +52,7 @@ dsh plugin --profile web add /path/to/dsh-handoff-tab
 
 在 DSH 里让 agent 调 `plugin_manager`，`action: install_bundle`，`target` 指向仓库目录。它会完成包安装与 bundle 选择。
 
-安装后可自查（应看到 `- id: handoff` 行）：
+安装后可自查（应看到 `- id: dsh-handoff-tab` 行）：
 
 ```bash
 dsh --profile web --dump-config | grep -A1 handoff
@@ -131,7 +131,7 @@ node --check index.js && node --check client.js
 ```
 
 - 本地目录安装是 linked 方式：改 `client.js` 由 client-hmr 热替换；改 `index.js` 需要在插件管理里关/开该插件或重启。
-- 宿主接口：`GET /handoff/doc?sessionId=<id>` 返回 `{state, text?, generatedAt?, model?, error?}`；`POST /handoff/generate` body `{sessionId}` 立即 202 并在后台生成。
+- 宿主接口：`GET /dsh-handoff-tab/doc?sessionId=<id>` 返回 `{state, text?, generatedAt?, model?, error?}`；`POST /dsh-handoff-tab/generate` body `{sessionId}` 立即 202 并在后台生成。
 - Agent 维护约定（README 入口、文档同步、验证与发布规则）见 [`AGENTS.md`](AGENTS.md)。
 
 ## 仓库结构 / 文档索引
@@ -145,7 +145,7 @@ node --check index.js && node --check client.js
 | [`LICENSE`](LICENSE) | MIT 许可证 |
 | [`.gitignore`](.gitignore) | 忽略依赖、日志、系统/编辑器噪音与本地临时产物 |
 | [`package.json`](package.json) | npm 包元数据、`dsh.bundle` / `dsh.client` 清单、测试脚本 |
-| [`cordis.patch.yml`](cordis.patch.yml) | bundle patch：插入 Host 行 `id: handoff` |
+| [`cordis.patch.yml`](cordis.patch.yml) | bundle patch：插入 Host 行 `id: dsh-handoff-tab` |
 | [`index.js`](index.js) | 宿主半部：两条路由、storageDomain、会话读取与转录压缩、LLM 调用、工作区快照、60 天清理 |
 | [`client.js`](client.js) | 浏览器半部：`conversation.view` 交接 tab、状态机、轮询、复制、主题样式、本 tab 激活时隐藏输入框 |
 | [`assets/icon-256.png`](assets/icon-256.png) | 唯一对外图标：插件管理页与社区市场卡片（GitHub 托管的位图） |

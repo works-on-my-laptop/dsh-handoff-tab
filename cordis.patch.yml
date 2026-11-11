@@ -1,6 +1,6 @@
 # dsh-handoff-tab bundle patch: inserts the Host row that serves the
-# /handoff/doc and /handoff/generate routes. The browser half is declared by
+# /dsh-handoff-tab/doc and /dsh-handoff-tab/generate routes. The browser half is declared by
 # package.json `dsh.client` and registers the conversation view tab.
 - insert:
-    - id: handoff
+    - id: dsh-handoff-tab
       name: dsh-handoff-tab
