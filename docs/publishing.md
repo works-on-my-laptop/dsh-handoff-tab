@@ -13,7 +13,7 @@
 | 仓库创建满 1 天（CI 自动检查） | ⏳ 2026-11-11 创建，2026-11-12 之后可提交 |
 | 仓库 topic `dsh-plugin` | ⬜ 在 GitHub 仓库 About 里添加 |
 | npm 发布（推荐，可免 `allowBuilds` 构建授权并进入带版本的索引） | ⬜ 需要 npm 登录 |
-| 市场卡片图标：GitHub 托管的位图（SVG 会被拒） | ✅ `assets/icon-256.png` |
+| 市场卡片图标：GitHub 托管的位图（SVG 会被拒） | ✅ `assets/icon-256.png`（由 `assets/icon.svg` 导出，也是插件管理页图标） |
 | `screenshots.json` + 1–8 张截图（可选，推荐） | ⬜ 需补真实截图 |
 | 提交条目 YAML | ⬜ 见下 |
 

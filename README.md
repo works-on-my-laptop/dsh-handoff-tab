@@ -138,8 +138,8 @@ node --check index.js && node --check client.js
 | [`cordis.patch.yml`](cordis.patch.yml) | bundle patch：插入 Host 行 `id: handoff` |
 | [`index.js`](index.js) | 宿主半部：两条路由、storageDomain、会话读取与转录压缩、LLM 调用、工作区快照、60 天清理 |
 | [`client.js`](client.js) | 浏览器半部：`conversation.view` 交接 tab、状态机、轮询、复制、主题样式、本 tab 激活时隐藏输入框 |
-| [`icon.svg`](icon.svg) | 插件管理页图标（项目原创矢量图，SVG） |
-| [`assets/icon-256.png`](assets/icon-256.png) | 社区市场卡片位图（市场只收 GitHub 托管的位图，不收 SVG） |
+| [`assets/icon-256.png`](assets/icon-256.png) | 唯一对外图标：插件管理页与社区市场卡片（GitHub 托管的位图） |
+| [`assets/icon.svg`](assets/icon.svg) | 图标矢量源文件（不直接对外；改图后重新导出 `icon-256.png`） |
 | [`locale/zh.json`](locale/zh.json) / [`locale/en.json`](locale/en.json) | 插件管理页的中英文标题与描述 |
 | [`docs/plugin-design.md`](docs/plugin-design.md) | 已冻结的设计规格：需求、架构、数据模型、接口、里程碑、风险 |
 | [`docs/handoff-prompt.md`](docs/handoff-prompt.md) | 交接提示词契约；其「提示词正文」与 `index.js` 的 `SYSTEM_PROMPT` 逐字一致（由测试校验） |
@@ -162,4 +162,4 @@ node --check index.js && node --check client.js
 
 [MIT](LICENSE) © dsh-handoff-tab contributors
 
-`icon.svg` 是项目原创几何矢量图（本仓库内从零绘制，未使用任何第三方图标库或素材），随项目同以 MIT 许可发布，无额外署名要求。
+`assets/icon.svg` 是项目原创几何矢量图（本仓库内从零绘制，未使用任何第三方图标库或素材），`assets/icon-256.png` 由它导出，两者随项目同以 MIT 许可发布，无额外署名要求。
