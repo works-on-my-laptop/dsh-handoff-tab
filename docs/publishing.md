@@ -14,7 +14,7 @@
 | 仓库 topic `dsh-plugin` | ⬜ 在 GitHub 仓库 About 里添加 |
 | npm 发布（推荐，可免 `allowBuilds` 构建授权并进入带版本的索引） | ⬜ 需要 npm 登录 |
 | 市场卡片图标：GitHub 托管的位图（SVG 会被拒） | ✅ `assets/icon-256.png`（由 `assets/icon.svg` 导出，也是插件管理页图标） |
-| `screenshots.json` + 1–8 张截图（可选，推荐） | ⬜ 需补真实截图 |
+| `screenshots.json` + 1–8 张截图（可选，推荐） | ✅ 已提供 `screenshots/1–3.png`（未生成 / 生成中 / 已就绪） |
 | 提交条目 YAML | ⬜ 见下 |
 
 ## 步骤
@@ -44,24 +44,9 @@ npm view dsh-handoff-tab version dist.tarball
 dsh plugin --profile web add dsh-handoff-tab   # 可在临时 profile 验证
 ```
 
-### 3. 截图（可选，推荐）
+### 3. 截图（已完成）
 
-在 DSH Web 里截 2–3 张图（建议 16:9 或 4:3）：
-
-1. 空状态：会话 tab 行出现「交接」，正文区显示「生成交接提示词」；
-2. 就绪状态：正文 + 顶部生成时间 / 重新生成 / 复制；
-3. 生成中或窄屏「更多会话视图」菜单（可选）。
-
-放到 `assets/screenshots/`，然后在仓库根加 `screenshots.json`：
-
-```json
-[
-  "assets/screenshots/empty.png",
-  "assets/screenshots/ready.png"
-]
-```
-
-市场每晚构建时自动读取；以后换图只需推自己的仓库。
+仓库里已有 3 张截图（`screenshots/1–3.png`：未生成 / 生成中 / 已就绪），并在根目录 [`screenshots.json`](../screenshots.json) 登记。市场每晚构建时自动读取；以后换图只需替换文件并保持清单一致，不需要来注册表提 PR。
 
 ### 4. 提交条目
 

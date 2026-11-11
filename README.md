@@ -16,6 +16,14 @@ DeepSeek Harness（DSH）Web 会话视图的「交接」tab：在后台读当前
 - 生成失败给出错误文案与重试，不留半成品；重新生成直接覆盖旧值。
 - 界面文本中英双语（跟随 DSH locale），颜色/圆角/字体跟随宿主主题 token。
 
+## 截图
+
+| 未生成 | 生成中 | 已就绪 |
+| --- | --- | --- |
+| <img src="screenshots/1.png" width="360" alt="交接 tab 空状态"> | <img src="screenshots/2.png" width="360" alt="交接 tab 正在生成"> | <img src="screenshots/3.png" width="360" alt="交接 tab 已生成"> |
+
+截图同时登记在 [`screenshots.json`](screenshots.json)，社区市场（dsh-market 详情页）会直接读取这个清单。
+
 ## 环境要求
 
 - DSH **0.2.2-rc.1**（web profile）实测；`engines.dsh` 兼容范围 `>=0.2.0-rc.1 <0.3.0-0`。
@@ -111,7 +119,7 @@ rm "$DSH_HOME/storages/handoff.json"
 当前准备度：
 
 - 已满足：`dsh.bundle` manifest、真实代码、`engines.dsh`、带预发布分支的 peer 范围、`assets/icon-256.png` 市场卡片图。
-- 待办：在 GitHub 仓库加 `dsh-plugin` topic、npm 发布（`npm publish --access public`）、补真实截图、仓库满 1 天后向注册表提 PR。
+- 待办：在 GitHub 仓库加 `dsh-plugin` topic、npm 发布（`npm publish --access public`）、仓库满 1 天后向注册表提 PR。
 
 ## 开发
 
@@ -140,6 +148,8 @@ node --check index.js && node --check client.js
 | [`client.js`](client.js) | 浏览器半部：`conversation.view` 交接 tab、状态机、轮询、复制、主题样式、本 tab 激活时隐藏输入框 |
 | [`assets/icon-256.png`](assets/icon-256.png) | 唯一对外图标：插件管理页与社区市场卡片（GitHub 托管的位图） |
 | [`assets/icon.svg`](assets/icon.svg) | 图标矢量源文件（不直接对外；改图后重新导出 `icon-256.png`） |
+| [`screenshots.json`](screenshots.json) | 社区市场截图清单（1–8 张，路径相对于本文件） |
+| [`screenshots/1.png`](screenshots/1.png) / [`2.png`](screenshots/2.png) / [`3.png`](screenshots/3.png) | 界面截图：未生成 / 生成中 / 已就绪 |
 | [`locale/zh.json`](locale/zh.json) / [`locale/en.json`](locale/en.json) | 插件管理页的中英文标题与描述 |
 | [`docs/plugin-design.md`](docs/plugin-design.md) | 已冻结的设计规格：需求、架构、数据模型、接口、里程碑、风险 |
 | [`docs/handoff-prompt.md`](docs/handoff-prompt.md) | 交接提示词契约；其「提示词正文」与 `index.js` 的 `SYSTEM_PROMPT` 逐字一致（由测试校验） |
