@@ -137,3 +137,5 @@ node --check index.js && node --check client.js
 ## License
 
 [MIT](LICENSE) © dsh-handoff-tab contributors
+
+`icon.svg` 是项目原创几何矢量图（本仓库内从零绘制，未使用任何第三方图标库或素材），随项目同以 MIT 许可发布，无额外署名要求。
