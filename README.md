@@ -104,31 +104,53 @@ rm "$DSH_HOME/storages/handoff.json"
 - 记录 schema 使用最小校验对象（只要求 `parse`/`safeParse`）而不是 zod：本地目录以 linked 方式装入 profile 时解析不到 profile 的 `zod`，而 harness 只代理自己安装的 `@deepseek-ai/*`；这样插件保持零依赖。
 - 视图组件只 `require('react')`，不 require 任何 DSH Client 包（官方建议，避免版本漂移与 slot 崩溃）。
 
+## 上架到社区市场
+
+社区列表是 [awesome-dsh-plugin](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin)（网站 <https://awesome-dsh-plugin.com> / dsh-market 读取同一份数据）。收录要求、npm 发布、截图、注册表条目 YAML 与 PR 流程都写在 [`docs/publishing.md`](docs/publishing.md)，这里不重复。
+
+当前准备度：
+
+- 已满足：`dsh.bundle` manifest、真实代码、`engines.dsh`、带预发布分支的 peer 范围、`assets/icon-256.png` 市场卡片图。
+- 待办：在 GitHub 仓库加 `dsh-plugin` topic、npm 发布（`npm publish --access public`）、补真实截图、仓库满 1 天后向注册表提 PR。
+
 ## 开发
 
-```text
-package.json        # bundle patch + dsh.client Web 清单
-cordis.patch.yml    # 插入 patch 行 id: handoff
-index.js            # 宿主：GET /handoff/doc、POST /handoff/generate、storageDomain、生成管线、60 天清理
-client.js           # 浏览器：conversation.view tab + 状态机 + 样式
-locale/{zh,en}.json # 插件管理页标题/描述
-icon.svg            # 插件图标
-test/client-smoke.cjs # 客户端注册结构冒烟测试（零依赖）
-docs/               # 设计规格与提示词契约
-```
-
 ```bash
-npm test        # 客户端注册冒烟测试（node test/client-smoke.cjs）
+npm test        # 客户端注册冒烟 + 提示词与代码同步校验
 node --check index.js && node --check client.js
 ```
 
 - 本地目录安装是 linked 方式：改 `client.js` 由 client-hmr 热替换；改 `index.js` 需要在插件管理里关/开该插件或重启。
 - 宿主接口：`GET /handoff/doc?sessionId=<id>` 返回 `{state, text?, generatedAt?, model?, error?}`；`POST /handoff/generate` body `{sessionId}` 立即 202 并在后台生成。
-- 设计细节见 [`docs/plugin-design.md`](docs/plugin-design.md)，提示词契约见 [`docs/handoff-prompt.md`](docs/handoff-prompt.md)，社区市场发布流程见 [`docs/publishing.md`](docs/publishing.md)。
+- Agent 维护约定（README 入口、文档同步、验证与发布规则）见 [`AGENTS.md`](AGENTS.md)。
+
+## 仓库结构 / 文档索引
+
+**README 是唯一入口：每个受版本控制的文件都在下表里有用途说明。** 新增、移动或删除文件时，请同步更新此表。
+
+| 路径 | 用途 |
+| --- | --- |
+| [`README.md`](README.md) | 本文件：功能、安装、使用、隐私、卸载、开发与文档入口 |
+| [`AGENTS.md`](AGENTS.md) | Agent 维护约定：README 入口、文档同步、验证与发布规则 |
+| [`LICENSE`](LICENSE) | MIT 许可证 |
+| [`.gitignore`](.gitignore) | 忽略依赖、日志、系统/编辑器噪音与本地临时产物 |
+| [`package.json`](package.json) | npm 包元数据、`dsh.bundle` / `dsh.client` 清单、测试脚本 |
+| [`cordis.patch.yml`](cordis.patch.yml) | bundle patch：插入 Host 行 `id: handoff` |
+| [`index.js`](index.js) | 宿主半部：两条路由、storageDomain、会话读取与转录压缩、LLM 调用、工作区快照、60 天清理 |
+| [`client.js`](client.js) | 浏览器半部：`conversation.view` 交接 tab、状态机、轮询、复制、主题样式、本 tab 激活时隐藏输入框 |
+| [`icon.svg`](icon.svg) | 插件管理页图标（项目原创矢量图，SVG） |
+| [`assets/icon-256.png`](assets/icon-256.png) | 社区市场卡片位图（市场只收 GitHub 托管的位图，不收 SVG） |
+| [`locale/zh.json`](locale/zh.json) / [`locale/en.json`](locale/en.json) | 插件管理页的中英文标题与描述 |
+| [`docs/plugin-design.md`](docs/plugin-design.md) | 已冻结的设计规格：需求、架构、数据模型、接口、里程碑、风险 |
+| [`docs/handoff-prompt.md`](docs/handoff-prompt.md) | 交接提示词契约；其「提示词正文」与 `index.js` 的 `SYSTEM_PROMPT` 逐字一致（由测试校验） |
+| [`docs/publishing.md`](docs/publishing.md) | 社区市场上架清单、npm 发布、截图、注册表条目与 PR 流程 |
+| [`test/client-smoke.cjs`](test/client-smoke.cjs) | 客户端插件注册结构冒烟测试（零依赖） |
+| [`test/prompt-sync.cjs`](test/prompt-sync.cjs) | 校验 `docs/handoff-prompt.md` 与 `index.js` 的 `SYSTEM_PROMPT` 保持同步 |
+| [`.github/workflows/check.yml`](.github/workflows/check.yml) | CI：push/PR 时跑语法检查、JSON 校验与 `npm test` |
 
 ## 验证记录（DSH 0.2.2-rc.1）
 
-- 真实生成 4 次，19–66 秒；产物均为「正文即提示词」，无可粘贴外壳。
+- 真实生成多次（19–66 秒）；产物均为「正文即提示词」，无可粘贴外壳。
 - 零会话足迹：空闲会话生成前后日志行数 332 → 332。
 - 零工作区足迹：生成前后 `git status` 无新增文件。
 - 60 天清理：注入 `generatedAt=0` 的测试纪录后重载插件，5 秒后删除，其余保留。

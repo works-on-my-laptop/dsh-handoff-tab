@@ -42,7 +42,7 @@ const ROUTE_GENERATE = '/handoff/generate'
 const DOMAIN_NAME = 'handoff'
 const TABLE_NAME = 'documents'
 const DOMAIN_VERSION = 1
-const PROMPT_VERSION = 1
+const PROMPT_VERSION = 2
 
 /** Retained documents older than this are pruned when the plugin loads. */
 const RETENTION_DAYS = 60
