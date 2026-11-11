@@ -5,7 +5,7 @@ on:
   pull_request:
 
 jobs:
-  syntax-and-client-smoke:
+  check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -18,6 +18,6 @@ jobs:
           node --check client.js
       - name: Validate JSON resources
         run: |
-          node -e "for (const f of ['package.json','locale/zh.json','locale/en.json']) JSON.parse(require('fs').readFileSync(f,'utf8'))"
-      - name: Tests (client registration + prompt sync)
+          node -e "for (const f of ['package.json','locale/zh.json','locale/en.json','screenshots.json']) JSON.parse(require('fs').readFileSync(f,'utf8'))"
+      - name: Tests (client registration, prompt sync, package metadata)
         run: npm test
